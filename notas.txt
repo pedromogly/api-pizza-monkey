@@ -1,0 +1,32 @@
+::iniciar corretamente o ambiente de desenvolvimento em ts:
+
+npm i typescript -D (para instalar em modo de dev)
+npx tsc --init (para criar o arquivo tsconfig)
+
+npm i ts-node-dev -D (para instalar os scripts inicialização 'ts-node-dev')
+::configura no package.json em scripts:
+"dev": "ts-node-dev src/server.ts"
+
+::Roda o servidor com yarn
+yarn dev
+
+::Biblioteca para lidar com erros de redirecionamento ou inputs incorretos,etc:
+yarn add express-async-errors
+
+
+
+
+
+
+
+
+
+
+
+// Etapas para criar esse tipo de API
+1- após todas as configurações do typescript
+2- instalar via npm: cors(com type@), dotenv, express-async-error
+3- instalar o ORM prisma, segue documentação no site: https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/mongodb-typescript-mongodb
+4- dar o init no prisma
+5- Estruturar o projeto, criar pasta srv, com routes.ts e server.ts
+6- 

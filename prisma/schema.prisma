@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+//criar uma migration: yarn prisma migrate dev
+model User {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  username String
+  pass String
+  created_at DateTime? @default(now())
+  update_at DateTime? @default(now())
+
+  //não é necessario usar o @@map("users") para criar
+}
+
+model Category {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  
+  created_at DateTime? @default(now())
+  update_at DateTime? @default(now())
+  products Product[]
+}
+
+model Product {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  price String
+  description String
+  banner String
+
+  created_at DateTime? @default(now())
+  update_at DateTime? @default(now())
+  category Category @relation(fields: [category_id],references: [id])
+  category_id String @db.ObjectId
+  items Item[]
+}
+
+model Order {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  table Int
+  status Boolean @default(false)
+  draft Boolean @default(true)
+  name String?
+
+  created_at DateTime? @default(now())
+  update_at DateTime? @default(now())
+  items Item[]
+}
+
+model Item {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  amount Int
+
+  created_at DateTime? @default(now())
+  update_at DateTime? @default(now())
+  product Product @relation(fields: [product_id], references: [id])
+  product_id String @db.ObjectId
+
+  order Order @relation(fields: [order_id], references: [id])
+  order_id String @db.ObjectId
+}
